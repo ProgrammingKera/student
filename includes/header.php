@@ -97,7 +97,13 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <i class="fas fa-bell"></i>
                     <span class="sidebar-menu-label">Notifications</span>
                 </a>
-                
+
+                <a href="weed_off_books.php" class="sidebar-menu-item <?php echo $currentPage == 'weed_off_books.php' ? 'active' : ''; ?>">
+    <i class="fas fa-trash-alt"></i>
+    <span class="sidebar-menu-label">Weed Off Books</span>
+</a>
+
+
                 <a href="profile.php" class="sidebar-menu-item <?php echo $currentPage == 'profile.php' ? 'active' : ''; ?>">
                     <i class="fas fa-user-circle"></i>
                     <span class="sidebar-menu-label">Profile</span>

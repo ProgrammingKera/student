@@ -182,6 +182,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             text-decoration: underline;
         }
 
+        .forgot-password-link {
+            display: block;
+            margin-top: 10px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .forgot-password-link:hover {
+            color: #0d47a1;
+            text-decoration: underline;
+        }
+
         .alert {
             padding: 15px;
             margin-bottom: 20px;
@@ -244,6 +257,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
+
+                <a href="forgot_password.php" class="forgot-password-link">
+                    <i class="fas fa-key"></i> Forgot your password?
+                </a>
 
                 <a href="register.php" class="register-link">
                     <i class="fas fa-user-plus"></i> Don't have an account? Register here
