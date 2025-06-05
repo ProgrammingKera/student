@@ -203,7 +203,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
 </div>
 
-<div class="view-options">
+<div class="view-options" style="margin-top: 20px;">
     <button class="view-option active" data-view="books-grid">
         <i class="fas fa-th"></i>
     </button>

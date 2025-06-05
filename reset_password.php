@@ -10,7 +10,7 @@ $token = isset($_GET['token']) ? $_GET['token'] : '';
 // Verify token
 if (!empty($token)) {
     $stmt = $conn->prepare("
-        SELECT pr.*, u.email 
+        SELECT pr.*, u.email, u.id as user_id
         FROM password_resets pr
         JOIN users u ON pr.user_id = u.id
         WHERE pr.token = ? AND pr.expires_at > NOW()
@@ -287,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $validToken) {
             <?php endif; ?>
             
             <?php if ($validToken): ?>
-                <form method="POST" action="">
+                <form method="POST" action="reset_password.php?token=<?php echo htmlspecialchars($token); ?>">
                     <div class="form-group">
                         <label for="password"><i class="fas fa-lock"></i> New Password</label>
                         <input type="password" id="password" name="password" placeholder="Enter your new password" required>

@@ -164,7 +164,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
 </div>
 
-<div class="table-container">
+<div class="table-container" style="margin-top:30px";>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -204,10 +204,10 @@ while ($row = $result->fetch_assoc()) {
                         <td><?php echo htmlspecialchars($user['phone']); ?></td>
                         <td><?php echo date('M d, Y', strtotime($user['created_at'])); ?></td>
                         <td>
-                            <a href="user_details.php?id=<?php echo $user['id']; ?>" class="btn btn-sm btn-primary">
+                            <a href="user_details.php?id=<?php echo $user['id']; ?>" style="margin-bottom:10px"; class="btn btn-sm btn-primary">
                                 <i class="fas fa-info-circle"></i> Details
                             </a>
-                            <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="btn btn-sm btn-secondary">
+                            <a href="edit_user.php?id=<?php echo $user['id']; ?>" style="margin-bottom:10px"; class="btn btn-sm btn-secondary">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
                             <a href="?delete=<?php echo $user['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirmDelete('Are you sure you want to delete this user?')">

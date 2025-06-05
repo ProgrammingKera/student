@@ -214,7 +214,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
 </div>
 
-<div class="table-container">
+<div class="table-container" style="margin-top:30px";>
     <table class="table table-striped">
         <thead>
             <tr>

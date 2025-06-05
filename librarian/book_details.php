@@ -69,19 +69,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_book'])) {
     );
     
     if ($stmt->execute()) {
-        $message = "Book updated successfully.";
-        $messageType = "success";
-        
-        // Refresh book details
-        $stmt = $conn->prepare("SELECT * FROM books WHERE id = ?");
-        $stmt->bind_param("i", $bookId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $book = $result->fetch_assoc();
-    } else {
-        $message = "Error updating book: " . $stmt->error;
-        $messageType = "danger";
-    }
+    $message = "Book updated successfully.";
+    $messageType = "success";
+
+    // Refresh book details with calculated fields
+    $stmt = $conn->prepare("
+        SELECT b.*, 
+               COUNT(DISTINCT ib.id) as times_issued,
+               COUNT(DISTINCT CASE WHEN ib.status = 'issued' OR ib.status = 'overdue' THEN ib.id END) as currently_issued
+        FROM books b
+        LEFT JOIN issued_books ib ON b.id = ib.book_id
+        WHERE b.id = ?
+        GROUP BY b.id
+    ");
+    $stmt->bind_param("i", $bookId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $book = $result->fetch_assoc();
+} else {
+    $message = "Error updating book: " . $stmt->error;
+    $messageType = "danger";
+}
 }
 ?>
 
@@ -347,6 +355,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_book'])) {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.book-details-form input,
+.book-details-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9em;
+    box-sizing: border-box;
 }
 
 @media (max-width: 992px) {

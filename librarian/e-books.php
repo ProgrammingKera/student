@@ -181,7 +181,7 @@ while ($row = $result->fetch_assoc()) {
     </div>
 </div>
 
-<div class="table-container">
+<div class="table-container" style="margin-top: 30px;">
     <table class="table table-striped">
         <thead>
             <tr>
@@ -234,7 +234,7 @@ while ($row = $result->fetch_assoc()) {
                             <a href="ebook_details.php?id=<?php echo $ebook['id']; ?>" class="btn btn-sm btn-secondary">
                                 <i class="fas fa-info-circle"></i> Details
                             </a>
-                            <a href="?delete=<?php echo $ebook['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirmDelete('Are you sure you want to delete this e-book?')">
+                            <a href="?delete=<?php echo $ebook['id']; ?>" style="margin-top:10px;" class="btn btn-sm btn-danger" onclick="return confirmDelete('Are you sure you want to delete this e-book?')">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
                         </td>

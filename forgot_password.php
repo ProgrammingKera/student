@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Karachi');
 session_start();
 include 'includes/config.php';
 require 'vendor/autoload.php';
@@ -22,20 +23,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user = $result->fetch_assoc();
         
         // Generate reset token
-        $token = bin2hex(random_bytes(32));
-        $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
-        
-        // Delete any existing reset tokens for this user
-        $stmt = $conn->prepare("DELETE FROM password_resets WHERE user_id = ?");
-        $stmt->bind_param("i", $user['id']);
-        $stmt->execute();
-        
-        // Store reset token
-        $stmt = $conn->prepare("
-            INSERT INTO password_resets (user_id, token, expires_at)
-            VALUES (?, ?, ?)
-        ");
-        $stmt->bind_param("iss", $user['id'], $token, $expires);
+$token = bin2hex(random_bytes(32));
+$createdAt = date('Y-m-d H:i:s');
+$expiresAt = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+// Delete any existing reset tokens for this user
+$stmt = $conn->prepare("DELETE FROM password_resets WHERE user_id = ?");
+$stmt->bind_param("i", $user['id']);
+$stmt->execute();
+
+// Store reset token
+$stmt = $conn->prepare("
+    INSERT INTO password_resets (user_id, token, created_at, expires_at)
+    VALUES (?, ?, ?, ?)
+");
+$stmt->bind_param("isss", $user['id'], $token, $createdAt, $expiresAt);
         
         if ($stmt->execute()) {
             // Create reset link
@@ -93,8 +95,8 @@ $sql = "CREATE TABLE IF NOT EXISTS password_resets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     token VARCHAR(64) NOT NULL,
-    expires_at DATETIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     UNIQUE KEY unique_token (token)
 )";
