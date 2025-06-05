@@ -1,6 +1,10 @@
 <?php
 session_start();
 include 'includes/config.php';
+require 'vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 $message = '';
 $messageType = '';
@@ -37,8 +41,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Create reset link
             $resetLink = "http://{$_SERVER['HTTP_HOST']}/reset_password.php?token=" . $token;
             
-            $message = "Password reset instructions have been sent to your email address. For demo purposes, here's your reset link: <a href='$resetLink'>Reset Password</a>";
-            $messageType = "success";
+            // Send email using PHPMailer
+            $mail = new PHPMailer(true);
+            
+            try {
+                // Server settings
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP host
+                $mail->SMTPAuth = true;
+                $mail->Username = 'mmoizrashad@gmail.com'; // Replace with your email
+                $mail->Password = 'zyen yedp tcsg drok'; // Replace with your app password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port = 587;
+                
+                // Recipients
+                $mail->setFrom('library@example.com', 'Library Management System');
+                $mail->addAddress($email, $user['name']);
+                
+                // Content
+                $mail->isHTML(true);
+                $mail->Subject = 'Password Reset Request';
+                $mail->Body = "
+                    <h2>Password Reset Request</h2>
+                    <p>Dear {$user['name']},</p>
+                    <p>We received a request to reset your password. Click the link below to reset your password:</p>
+                    <p><a href='{$resetLink}'>{$resetLink}</a></p>
+                    <p>This link will expire in 1 hour.</p>
+                    <p>If you didn't request this, please ignore this email.</p>
+                    <p>Best regards,<br>Library Management System</p>
+                ";
+                
+                $mail->send();
+                $message = "Password reset instructions have been sent to your email address.";
+                $messageType = "success";
+            } catch (Exception $e) {
+                $message = "Error sending email. Please try again later.";
+                $messageType = "danger";
+            }
         } else {
             $message = "Error generating reset token. Please try again.";
             $messageType = "danger";
@@ -220,11 +259,6 @@ $conn->query($sql);
             background-color: #fee2e2;
             color: #dc2626;
             border: 1px solid #fecaca;
-        }
-
-        .alert a {
-            color: inherit;
-            text-decoration: underline;
         }
 
         .text-center {
