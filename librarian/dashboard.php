@@ -62,9 +62,10 @@ $sql = "
     FROM issued_books ib
     JOIN books b ON ib.book_id = b.id
     JOIN users u ON ib.user_id = u.id
-    WHERE ib.return_date = ? AND ib.status = 'issued'
+    WHERE DATE(ib.return_date) = ? AND ib.status = 'issued'
     ORDER BY ib.return_date ASC
 ";
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $today);
 $stmt->execute();
@@ -233,8 +234,8 @@ if ($result) {
                                         <td><?php echo $row['user_name']; ?></td>
                                         <td><?php echo date('M d, Y', strtotime($row['request_date'])); ?></td>
                                         <td>
-                                            <a href="process_request.php?id=<?php echo $row['id']; ?>&action=approve" class="btn btn-sm btn-success">Approve</a>
-                                            <a href="process_request.php?id=<?php echo $row['id']; ?>&action=reject" class="btn btn-sm btn-danger">Reject</a>
+                                            <a href="request.php?id=<?php echo $row['id']; ?>&action=approve" class="btn btn-sm btn-success">Approve</a>
+                                            <a href="request.php?id=<?php echo $row['id']; ?>&action=reject" class="btn btn-sm btn-danger">Reject</a>
                                         </td>
                                     </tr>
                                 <?php endwhile; ?>
@@ -267,25 +268,27 @@ if ($result) {
                     <div class="table-container">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th>Book</th>
-                                    <th>User</th>
-                                    <th>Issue Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($dueTodayBooks as $book): ?>
-                                    <tr>
-                                        <td><?php echo $book['title']; ?></td>
-                                        <td><?php echo $book['user_name']; ?></td>
-                                        <td><?php echo date('M d, Y', strtotime($book['issue_date'])); ?></td>
-                                        <td>
-                                            <a href="process_return.php?id=<?php echo $book['id']; ?>" class="btn btn-sm btn-primary">Process Return</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
+    <tr>
+        <th>Book</th>
+        <th>User</th>
+        <th>Issue Date</th>
+        <th>Due Date</th> <!-- ADD THIS -->
+        <th>Action</th>
+    </tr>
+</thead>
+<tbody>
+    <?php foreach ($dueTodayBooks as $book): ?>
+        <tr>
+            <td><?= $book['title']; ?></td>
+            <td><?= $book['user_name']; ?></td>
+            <td><?= date('M d, Y', strtotime($book['issue_date'])); ?></td>
+            <td><?= date('M d, Y', strtotime($book['return_date'])); ?></td> <!-- ADD THIS -->
+            <td>
+                <a href="process_return.php?id=<?= $book['id']; ?>" class="btn btn-sm btn-primary">Process Return</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
                         </table>
                     </div>
                 <?php else: ?>
@@ -306,28 +309,27 @@ if ($result) {
                     <div class="table-container">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th>Book</th>
-                                    <th>User</th>
-                                    <th>Days Overdue</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($overdueBooks as $book): ?>
-                                    <tr>
-                                        <td><?php echo $book['title']; ?></td>
-                                        <td><?php echo $book['user_name']; ?></td>
-                                        <td>
-                                            <span class="badge badge-danger"><?php echo $book['days_overdue']; ?> days</span>
-                                        </td>
-                                        <td>
-                                            <a href="process_return.php?id=<?php echo $book['id']; ?>" class="btn btn-sm btn-primary">Process Return</a>
-                                            <a href="send_reminder.php?id=<?php echo $book['id']; ?>" class="btn btn-sm btn-warning">Send Reminder</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
+    <tr>
+        <th>Book</th>
+        <th>User</th>
+        <th>Issue Date</th>
+        <th>Due Date</th> <!-- Added -->
+        <th>Action</th>
+    </tr>
+</thead>
+<tbody>
+    <?php foreach ($dueTodayBooks as $book): ?>
+        <tr>
+            <td><?= $book['title']; ?></td>
+            <td><?= $book['user_name']; ?></td>
+            <td><?= date('M d, Y', strtotime($book['issue_date'])); ?></td>
+            <td><?= date('M d, Y', strtotime($book['return_date'])); ?></td> <!-- Show due date -->
+            <td>
+                <a href="process_return.php?id=<?= $book['id']; ?>" class="btn btn-sm btn-primary">Process Return</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
                         </table>
                     </div>
                     

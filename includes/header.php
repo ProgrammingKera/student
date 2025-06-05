@@ -52,67 +52,95 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </div>
             
             <div class="sidebar-menu">
-                <a href="dashboard.php" class="sidebar-menu-item <?php echo $currentPage == 'dashboard.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span class="sidebar-menu-label">Dashboard</span>
-                </a>
-                
-                <a href="books.php" class="sidebar-menu-item <?php echo $currentPage == 'books.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-book"></i>
-                    <span class="sidebar-menu-label">Books</span>
-                </a>
-                
-                <a href="e-books.php" class="sidebar-menu-item <?php echo $currentPage == 'e-books.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-file-pdf"></i>
-                    <span class="sidebar-menu-label">E-Books</span>
-                </a>
-                
-                <a href="users.php" class="sidebar-menu-item <?php echo $currentPage == 'users.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-users"></i>
-                    <span class="sidebar-menu-label">Users</span>
-                </a>
-
-              <a href="issue_book.php" class="sidebar-menu-item <?php echo $currentPage == 'issue_book.php' ? 'active' : ''; ?>">
-    <i class="fas fa-book-open"></i>
-    <span class="sidebar-menu-label">Book Issue</span>
-</a>
-
-                
-                <a href="requests.php" class="sidebar-menu-item <?php echo $currentPage == 'requests.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-bookmark"></i>
-                    <span class="sidebar-menu-label">Book Requests</span>
-                </a>
-                
-                <a href="returns.php" class="sidebar-menu-item <?php echo $currentPage == 'returns.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-undo"></i>
-                    <span class="sidebar-menu-label">Book Returns</span>
-                </a>
-                
-                <a href="fines.php" class="sidebar-menu-item <?php echo $currentPage == 'fines.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <span class="sidebar-menu-label">Fines</span>
-                </a>
-                
-                <a href="notifications.php" class="sidebar-menu-item <?php echo $currentPage == 'notifications.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-bell"></i>
-                    <span class="sidebar-menu-label">Notifications</span>
-                </a>
-
-                <a href="weed_off_books.php" class="sidebar-menu-item <?php echo $currentPage == 'weed_off_books.php' ? 'active' : ''; ?>">
-    <i class="fas fa-trash-alt"></i>
-    <span class="sidebar-menu-label">Weed Off Books</span>
-</a>
-
-
-                <a href="profile.php" class="sidebar-menu-item <?php echo $currentPage == 'profile.php' ? 'active' : ''; ?>">
-                    <i class="fas fa-user-circle"></i>
-                    <span class="sidebar-menu-label">Profile</span>
-                </a>
-                
-                <a href="../logout.php" class="sidebar-menu-item">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span class="sidebar-menu-label">Logout</span>
-                </a>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'student'): ?>
+                    <!-- Student Sidebar -->
+                    <a href="dashboard.php" class="sidebar-menu-item <?php echo $currentPage == 'dashboard.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="sidebar-menu-label">Dashboard</span>
+                    </a>
+                    <a href="books.php" class="sidebar-menu-item <?php echo $currentPage == 'books.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-book"></i>
+                        <span class="sidebar-menu-label">Books</span>
+                    </a>
+                    <a href="ebooks.php" class="sidebar-menu-item <?php echo $currentPage == 'ebooks.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-file-pdf"></i>
+                        <span class="sidebar-menu-label">E-Books</span>
+                    </a>
+                    <a href="requests.php" class="sidebar-menu-item <?php echo $currentPage == 'requests.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-bookmark"></i>
+                        <span class="sidebar-menu-label">My Requests</span>
+                    </a>
+                    <a href="returns.php" class="sidebar-menu-item <?php echo $currentPage == 'returns.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-undo"></i>
+                        <span class="sidebar-menu-label">My Returns</span>
+                    </a>
+                    <a href="fines.php" class="sidebar-menu-item <?php echo $currentPage == 'fines.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span class="sidebar-menu-label">My Fines</span>
+                    </a>
+                    <a href="notifications.php" class="sidebar-menu-item <?php echo $currentPage == 'notifications.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-bell"></i>
+                        <span class="sidebar-menu-label">Notifications</span>
+                    </a>
+                    <a href="profile.php" class="sidebar-menu-item <?php echo $currentPage == 'profile.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="sidebar-menu-label">Profile</span>
+                    </a>
+                    <a href="../logout.php" class="sidebar-menu-item">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="sidebar-menu-label">Logout</span>
+                    </a>
+                <?php else: ?>
+                    <!-- Librarian Sidebar -->
+                    <a href="dashboard.php" class="sidebar-menu-item <?php echo $currentPage == 'dashboard.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span class="sidebar-menu-label">Dashboard</span>
+                    </a>
+                    <a href="books.php" class="sidebar-menu-item <?php echo $currentPage == 'books.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-book"></i>
+                        <span class="sidebar-menu-label">Books</span>
+                    </a>
+                    <a href="e-books.php" class="sidebar-menu-item <?php echo $currentPage == 'e-books.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-file-pdf"></i>
+                        <span class="sidebar-menu-label">E-Books</span>
+                    </a>
+                    <a href="users.php" class="sidebar-menu-item <?php echo $currentPage == 'users.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-users"></i>
+                        <span class="sidebar-menu-label">Users</span>
+                    </a>
+                    <a href="issue_book.php" class="sidebar-menu-item <?php echo $currentPage == 'issue_book.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-book-open"></i>
+                        <span class="sidebar-menu-label">Book Issue</span>
+                    </a>
+                    <a href="requests.php" class="sidebar-menu-item <?php echo $currentPage == 'requests.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-bookmark"></i>
+                        <span class="sidebar-menu-label">Book Requests</span>
+                    </a>
+                    <a href="returns.php" class="sidebar-menu-item <?php echo $currentPage == 'returns.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-undo"></i>
+                        <span class="sidebar-menu-label">Book Returns</span>
+                    </a>
+                    <a href="fines.php" class="sidebar-menu-item <?php echo $currentPage == 'fines.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span class="sidebar-menu-label">Fines</span>
+                    </a>
+                    <a href="notifications.php" class="sidebar-menu-item <?php echo $currentPage == 'notifications.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-bell"></i>
+                        <span class="sidebar-menu-label">Notifications</span>
+                    </a>
+                    <a href="weed_off_books.php" class="sidebar-menu-item <?php echo $currentPage == 'weed_off_books.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-trash-alt"></i>
+                        <span class="sidebar-menu-label">Weed Off Books</span>
+                    </a>
+                    <a href="profile.php" class="sidebar-menu-item <?php echo $currentPage == 'profile.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="sidebar-menu-label">Profile</span>
+                    </a>
+                    <a href="../logout.php" class="sidebar-menu-item">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="sidebar-menu-label">Logout</span>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
         

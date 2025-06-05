@@ -98,7 +98,25 @@ if (isset($_POST['change_password'])) {
     }
 }
 ?>
-
+<style>
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+</style>
 <div class="container">
     <h1 class="page-title">My Profile</h1>
 
