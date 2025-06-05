@@ -47,15 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             try {
                 // Server settings
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com'; // Replace with your SMTP host
+                $mail->Host = 'smtp.gmail.com';
                 $mail->SMTPAuth = true;
-                $mail->Username = 'mmoizrashad@gmail.com'; // Replace with your email
-                $mail->Password = 'zyen yedp tcsg drok'; // Replace with your app password
+                $mail->Username = 'mmoizrashad@gmail.com'; // Your Gmail address
+                $mail->Password = 'zyen yedp tcsg drok'; // Your Gmail app password
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
                 
                 // Recipients
-                $mail->setFrom('library@example.com', 'Library Management System');
+                $mail->setFrom('mmoizrashad@gmail.com', 'Library Management System');
                 $mail->addAddress($email, $user['name']);
                 
                 // Content
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $message = "Password reset instructions have been sent to your email address.";
                 $messageType = "success";
             } catch (Exception $e) {
-                $message = "Error sending email. Please try again later.";
+                $message = "Error sending email: " . $mail->ErrorInfo;
                 $messageType = "danger";
             }
         } else {
