@@ -1,26 +1,36 @@
 /* Main Styles for Library Management System */
 
 :root {
-    --primary-color: #0d47a1;
-    --primary-light: #5472d3;
-    --primary-dark: #002171;
-    --secondary-color: #f5f5f5;
-    --accent-color: #ff6d00;
-    --success-color: #4caf50;
-    --warning-color: #ff9800;
-    --danger-color: #f44336;
-    --text-color: #333333;
-    --text-light: #757575;
-    --white: #ffffff;
-    --gray-100: #f8f9fa;
-    --gray-200: #e9ecef;
-    --gray-300: #dee2e6;
-    --gray-400: #ced4da;
-    --gray-500: #adb5bd;
-    --border-radius: 8px;
-    --box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
+  --primary-color: #0A74DA;      /* Strong Blue - Professional & Trustworthy */
+  --primary-light: #4A90E2;      /* Light Blue */
+  --primary-dark: #074B9C;       /* Dark Blue */
+
+  --secondary-color: #F7F9FC;    /* Very Light Gray Background */
+  --accent-color: #FF6F61;       /* Warm Coral Accent */
+
+  --success-color: #28A745;      /* Green */
+  --warning-color: #FFC107;      /* Amber */
+  --danger-color: #DC3545;       /* Red */
+
+  --text-color: #212529;         /* Almost Black for Text */
+  --text-light: #6C757D;         /* Grayish Text */
+
+  --white: #FFFFFF;
+
+  --gray-100: #E9ECEF;
+  --gray-200: #DEE2E6;
+  --gray-300: #CED4DA;
+  --gray-400: #ADB5BD;
+  --gray-500: #6C757D;
+
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(10, 116, 218, 0.15);
+  --transition: all 0.3s ease;
 }
+
+
+
+
 
 * {
     margin: 0;
@@ -146,6 +156,7 @@ img {
 
 .btn-danger:hover {
     background-color: #d32f2f;
+    color: white;
     transform: translateY(-1px);
 }
 
